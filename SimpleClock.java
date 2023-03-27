@@ -1,9 +1,15 @@
 //package SimpleClock;
 
 import javax.swing.*;
+import javax.swing.border.Border;
+import javax.swing.border.EmptyBorder;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+
+import static javax.swing.UIManager.getBorder;
 
 
 public class SimpleClock extends JFrame {
@@ -24,8 +30,16 @@ public class SimpleClock extends JFrame {
             this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
             this.setTitle("Digital Clock");
             this.setLayout(new FlowLayout());
-            this.setSize(350, 220);
+            this.setSize(350, 200);
             this.setResizable(false);
+            this.setBounds(300,300,600,300);
+            this.setVisible(true);
+
+
+            JButton time = new JButton("12/24 Hour");
+            time.setBounds(50,100,100,30);
+            this.add(time);
+
     
             timeFormat = new SimpleDateFormat("hh:mm:ss a");
             dayFormat=new SimpleDateFormat("EEEE");
@@ -48,8 +62,24 @@ public class SimpleClock extends JFrame {
             this.setVisible(true);
     
             setTimer();
+
+
+            //button
+
+
+            time.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    timeFormat = new SimpleDateFormat("HH:mm:ss a");
+                    time.setVisible(true);
+//                    contentPane.add(time,BorderLayout.CENTER);
+
+                }
+            });
+
+
         }
-    
+
         public void setTimer() {
             while (true) {
                 time = timeFormat.format(Calendar.getInstance().getTime());
@@ -60,7 +90,8 @@ public class SimpleClock extends JFrame {
     
                 date = dateFormat.format(Calendar.getInstance().getTime());
                 dateLabel.setText(date);
-    
+
+
                 try {
                     Thread.sleep(1000);
                 } catch (Exception e) {
