@@ -31,6 +31,7 @@ public class SimpleClock extends JFrame {
         String time;
         String day;
         String date;
+        boolean isRunning;
 
         boolean isMilitary = true;
         boolean isEST = true;
@@ -80,7 +81,7 @@ public class SimpleClock extends JFrame {
             this.add(militaryTime);
             this.add(estTime);
     
-            setTimer();
+//            setTimer();
 
 
             //button
@@ -94,7 +95,28 @@ public class SimpleClock extends JFrame {
 //                }
 //            });
 
+            Thread clockThread = new Thread(() -> {
+                while (true) {
 
+                    time = timeFormat.format(Calendar.getInstance().getTime());
+                    timeLabel.setText(time);
+
+                    day = dayFormat.format(Calendar.getInstance().getTime());
+                    dayLabel.setText(day);
+
+                    date = dateFormat.format(Calendar.getInstance().getTime());
+                    dateLabel.setText(date);
+
+                    if (isRunning) {
+                        try {
+                            Thread.sleep(1000);
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }
+            });
+            clockThread.start();
 
 
         }
@@ -130,25 +152,25 @@ public class SimpleClock extends JFrame {
 //
 
 
-        public void setTimer() {
-            while (true) {
-                time = timeFormat.format(Calendar.getInstance().getTime());
-                timeLabel.setText(time);
-    
-                day = dayFormat.format(Calendar.getInstance().getTime());
-                dayLabel.setText(day);
-    
-                date = dateFormat.format(Calendar.getInstance().getTime());
-                dateLabel.setText(date);
-
-
-                try {
-                    Thread.sleep(1000);
-                } catch (Exception e) {
-                    e.getStackTrace();
-                }
-            }
-        }
+//        public void setTimer() {
+//            while (true) {
+//                time = timeFormat.format(Calendar.getInstance().getTime());
+//                timeLabel.setText(time);
+//
+//                day = dayFormat.format(Calendar.getInstance().getTime());
+//                dayLabel.setText(day);
+//
+//                date = dateFormat.format(Calendar.getInstance().getTime());
+//                dateLabel.setText(date);
+//
+//
+//                try {
+//                    Thread.sleep(1000);
+//                } catch (Exception e) {
+//                    e.getStackTrace();
+//                }
+//            }
+//        }
         public static void main(String[] args) {
             new SimpleClock();
         }
